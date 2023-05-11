@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chute dos Números</title>
+	<style>
+		html{
+			font-family: sans-serif;
+		}
+
+		body{
+			width: 50%;
+			max-width: 600px;
+			min-width: 400px;
+			margin: 0 auto;
+		}
+
+		.form input[type="number"]{
+			width: 200px;
+		}
+
+		.ultimoResultado{
+			color: white;
+			padding: 3 px;
+		} 
+
+	</style>
+
+</head>
+<body>
+	<h1>Jogo do chute numérico</h1>
+	<p>Pense em um número entre 1 à 50 <br>
+	Você terá 5 tentativas para acertar que o número o JS selecionou.</p>
+
+	<div class="form">
+		<label for="campoChute">Informe um número:</label>
+		<input type="number" min="1"  max="50" name="campoChute" id="campoChute" 
+		class="campoChute">
+		<input  type="submit" name="enviarChute" value="Chutar..." class="enviarChute">
+
+	</div>
+
+	<!-- Imprime na tela os resultados e os chutes -->
+	<div class="registroChutes">
+		<p class="chutes"></p>
+		<p class="ultimoResultado"></p>
+		<p class="altoOuBaixo"></p>
+		<p class="resultadosParametros"></p>
+	</div>
+
+	<!-- Codigo de verificacao dos numeros -->
+	<script>
+		// variaveis
+		let numeroAleatorio = Math.floor(Math.random () * 50 ) + 1;
+
+		const chutes = document.querySelector('.chutes');
+		const ultimoResultado = document.querySelector('.ultimoResultado');
+		const altoOuBaixo = document.querySelector('.altoOuBaixo');
+		const enviarChute =document.querySelector('.enviarChute');
+		let contagemChutes = 1;
+		const campoChute = document.querySelector('.campoChute');
+
+
+
+		enviarChute.addEventListener('click', conferirChute);
+
+		function configFimDeJogo(){
+			campoChute.disabled = true;
+			enviarChute.disabled = true;
+			botaoReinicio = document.createElement('button');
+			botaoReinicio.textContent = "Reiniciar";
+			document.body.appendChild(botaoReinicio);
+			botaoReinicio.addEventListener('click', reiniciarJogo);
+			
+			
+		}
+
+	
+
+
+		function conferirChute(){
+			var chuteUsuario = Number(campoChute.value);
+
+			if(contagemChutes === 1){
+				chutes.textContent = 'Chutes anteriores: ';
+			}
+			chutes.textContent += chuteUsuario + '\n' ;
+
+			if (chuteUsuario === numeroAleatorio){
+				ultimoResultado.textContent = 'Wooo! Pra você a Megasena é o limite.'
+				ultimoResultado.style.backgroundColor = 'green';
+				altoOuBaixo.textContent = '';
+				configFimDeJogo();
+			}else if(contagemChutes === 5){
+				ultimoResultado.textContent = 'A brincadeira acabou :(';
+				altoOuBaixo.textContent = '';
+				configFimDeJogo();
+			}else{
+				ultimoResultado.textContent = 'Nopps!';
+				ultimoResultado.style.backgroundColor = 'red';
+				
+				if(chuteUsuario < numeroAleatorio){
+					altoOuBaixo.textContent = 'Chutou baixo!';
+				}else if(chuteUsuario > numeroAleatorio){
+					altoOuBaixo.textContent = 'Chutou alto!';
+				}
+			}
+
+			contagemChutes++;
+			campoChute.value = '';
+			campoChute.focus();
+			
+		}
+
+		
+		
+		
+		
+	
+
+
+		function reiniciarJogo(){
+			contagemChutes = 1;
+			var reiniciarParametros = document.querySelectorAll('.resultadosParametros p');
+
+			for (var i=0; i<reiniciarParametros.length; i++) {
+			 	reiniciarParametros.textContent ='';
+			} 
+
+			botaoReinicio.parentNode.removeChild(botaoReinicio);
+			campoChute.disabled = false;
+			enviarChute.disabled = false;
+			campoChute.value = '';
+			campoChute.focus();
+
+			ultimoChute.style.backgroundColor = 'white';
+			numeroAleatorio = Math.floor(Math.random()*50) + 1;
+
+
+		}
+
+
+	</script>
+</body>
+</html>
