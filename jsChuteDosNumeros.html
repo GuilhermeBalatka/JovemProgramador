@@ -2,9 +2,13 @@
 <html>
 <head>
 	<title>Chute dos Números</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style>
+
 		html{
 			font-family: sans-serif;
+			font-size: 30px;
+			background-color: rgb(79, 79, 79);
 		}
 
 		body{
@@ -12,6 +16,10 @@
 			max-width: 600px;
 			min-width: 400px;
 			margin: 0 auto;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			padding-top: 200px;
 		}
 
 		.form input[type="number"]{
@@ -23,30 +31,49 @@
 			padding: 3 px;
 		} 
 
+		.w3-card-4.w3-dark-grey{
+			padding-left: 100px;
+			padding-right: 100px;
+
+		}
+
+		.form{
+			padding-top:50px;
+
+		}
+
+		.enviarChute{
+			display:flex;
+			font-family: Candara;
+			border-radius: 5px;
+		}
+
 	</style>
 
 </head>
 <body>
-	<h1>Jogo do chute numérico</h1>
-	<p>Pense em um número entre 1 à 50 <br>
-	Você terá 5 tentativas para acertar que o número o JS selecionou.</p>
+	<div class="w3-card-4 w3-dark-grey ">
+		<h1>Jogo do chute numérico</h1>
+		<p>Pense em um número entre 1 à 50 <br>
+		Você terá 5 tentativas para acertar que o número o JS selecionou.</p>
 
-	<div class="form">
-		<label for="campoChute">Informe um número:</label>
-		<input type="number" min="1"  max="50" name="campoChute" id="campoChute" 
-		class="campoChute">
-		<input  type="submit" name="enviarChute" value="Chutar..." class="enviarChute">
+		<div class="form">
+			<label for="campoChute">Informe um número:</label>
+			<input type="number" min="1"  max="50" name="campoChute" id="campoChute" 
+			class="campoChute">
+			<input  type="submit" name="enviarChute" value="Chutar..." class="enviarChute">
 
-	</div>
-
+		</div>						
+	
 	<!-- Imprime na tela os resultados e os chutes -->
-	<div class="registroChutes">
-		<p class="chutes"></p>
-		<p class="ultimoResultado"></p>
-		<p class="altoOuBaixo"></p>
-		<p class="resultadosParametros"></p>
+		<div class="registroChutes">
+			<p class="chutes"></p>
+			<p class="ultimoResultado"></p>
+			<p class="altoOuBaixo"></p>
+			<p class="resultadosParametros"></p>
+			
+		</div>
 	</div>
-
 	<!-- Codigo de verificacao dos numeros -->
 	<script>
 		// variaveis
@@ -58,24 +85,23 @@
 		const enviarChute =document.querySelector('.enviarChute');
 		let contagemChutes = 1;
 		const campoChute = document.querySelector('.campoChute');
+		const card = document.querySelector('.w3-card-4');
 
-
-
-		enviarChute.addEventListener('click', conferirChute);
+		
 
 		function configFimDeJogo(){
 			campoChute.disabled = true;
 			enviarChute.disabled = true;
 			botaoReinicio = document.createElement('button');
 			botaoReinicio.textContent = "Reiniciar";
-			document.body.appendChild(botaoReinicio);
+			card.appendChild(botaoReinicio);
 			botaoReinicio.addEventListener('click', reiniciarJogo);
 			
 			
 		}
 
 	
-
+		enviarChute.addEventListener('click', conferirChute);
 
 		function conferirChute(){
 			var chuteUsuario = Number(campoChute.value);
