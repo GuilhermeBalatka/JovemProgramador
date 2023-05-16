@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Titulo da pagina-->
+	<title>Atividade Imagens</title>
+
+	<style>
+		h1{
+			text-align: center;
+			text-decoration: underline;
+			font-size: 50px;
+			color:rgb(173,216,230);
+		}
+
+		body{
+			background-color: black;
+		}
+
+		.form{
+			display: flex;
+			justify-content: center;
+		}
+		.img{
+			padding-top: 50px;
+			
+		}
+		.imagemAnterior{	
+			border-radius: 4px;
+		    background-color: #f4511e;
+		    border: none;
+		    border-style: outset;
+		    color: black;
+		    text-align: center;
+		    font-size: 28px;
+		    padding: 20px;
+		    width: 100px;
+		    cursor: pointer;
+		    margin: 5px;
+		}
+		.proximaImagem{
+			border-radius: 4px;
+		    background-color: #f4511e;
+		    border: none;
+		    border-style: outset;
+		    color: black;
+		    text-align: center;
+		    font-size: 28px;
+		    padding: 20px;
+		    width: 100px;
+		    cursor: pointer;
+		    margin: 5px;
+
+		}
+
+	
+	</style>
+</head>
+<body>
+
+	<!-- Criando um titulo-->
+	<h1>Galeria de Imagens</h1>
+
+	<!-- Criação do formulario para inserir imagen e os botoes-->
+	<div class="form">
+			<input type="submit" name="anterior" value="◀" class="imagemAnterior">
+			<img width="500" id="img" class="img" src="https://www.cleverfiles.com/howto/wp-content/uploads/2016/08/mini.jpg"><br>
+			
+			<input type="submit" name="proxima" value="▶" class="proximaImagem">
+			
+	</div>
+	
+
+	<!-- Entrando no JS-->
+
+	<script>
+		//Atribuindo os botoes as variaveis
+		const proxima = document.querySelector('.proximaImagem');
+		const anterior = document.querySelector('.imagemAnterior');
+		
+		//Criando um Arry para alocar as imagens em cada posicao
+		var imagens = [
+		   "https://www.cleverfiles.com/howto/wp-content/uploads/2016/08/mini.jpg",
+		   "https://upload.wikimedia.org/wikipedia/commons/e/e0/JPEG_example_JPG_RIP_050.jpg",
+		   "https://s2-techtudo.glbimg.com/1o2J-rf2G9qtlQlm82gaq-mFBec=/0x129:1024x952/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2023/7/i/ME2AxRRoygUyFPCDe0jQ/3.png",
+		   "https://s2-techtudo.glbimg.com/_fi6Z5P7AGZya-fdftAhZnCdbnw=/0x0:1024x1024/430x432/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2023/e/8/AoMju0TPWBvwkfwj2BXA/1.jpg"
+		];
+
+		//Funcao onde altera a imagem para o proximo item da lista
+		function alterarImagem(){
+		   var img = document.getElementById("img");
+		   var img_src = img.src;
+		   var img_idx = imagens.indexOf(img_src);
+		   img.src = imagens[ img_idx == imagens.length-1 ? 0 : img_idx+1 ];
+		}
+		
+		//Funcao onde altera a imagem para o item anterior da lista
+		function voltarImagem(){
+			if (imagens[i]<0) {
+				anterior.disabled = true;
+			}else{
+				var img = document.getElementById("img");
+		   		var img_src = img.src;
+		   		var img_idx = imagens.indexOf(img_src);
+		   		img.src = imagens[ img_idx == imagens.length+1 ? 0 : img_idx-1 ];	
+			}
+		   
+		}
+
+		//Onde os botoes quando clicados chamam as funcoes
+		proxima.addEventListener('click', alterarImagem);
+		anterior.addEventListener('click', voltarImagem);
+		
+
+	</script>
+</body>
+</html>
