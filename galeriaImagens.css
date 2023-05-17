@@ -1,0 +1,55 @@
+
+	h1{
+		text-align: center;
+		text-decoration: underline;
+		font-size: 50px;
+		color:rgb(173,216,230);
+	}
+
+	body{
+		background-color: black;
+	}
+
+	
+	.form{
+		padding-top: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.img{
+		border-radius: 5px;
+		border:solid;
+		border-color: gray;
+	}
+	.imagemAnterior{	
+		border-radius: 4px;
+	    background-color: #f4511e;
+	    border: none;
+	    border-style: outset;
+	    color: black;
+	    text-align: center;
+	    font-size: 28px;
+	    padding: 20px;
+	    width: 100px;
+	    cursor: pointer;
+	    margin: 5px;
+	}
+	.proximaImagem{
+		border-radius: 4px;
+	    background-color: #f4511e;
+	    border: none;
+	    border-style: outset;
+	    color: black;
+	    text-align: center;
+	    font-size: 28px;
+	    padding: 20px;
+	    width: 100px;
+	    cursor: pointer;
+	    margin: 5px;
+
+	}
+
+
+
