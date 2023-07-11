@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tela de Listagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .list {
+            width: 500px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+        }
+        
+        h2 {
+            margin-top: 0;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .item-actions {
+            margin-left: auto;
+        }
+        
+        .action-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        
+        .action-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Espaçamento entre as colunas do cabeçalho */
+        .list-header strong:not(:last-child) {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+       
+        <div class="list">
+            <h2>Clientes</h2>
+            <ul id="clientes-lista">
+                <!-- Cabeçalho da lista de clientes -->
+                <li class="list-header">
+                    <strong>ID</strong>
+                    <strong>Nome</strong>
+                    <strong>Idade</strong>
+                    <strong>CPF</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <button onclick="window.location.href='menu.html'">Voltar</button>
+    <script>
+        // Função para criar os itens da lista
+        function criarItensLista(array, listaId) {
+            var lista = document.getElementById(listaId);
+
+            for (var i = 0; i < array.length; i++) {
+                var item = document.createElement("li");
+                item.textContent = array[i].id_cliente + " - " + array[i].nome + " - " + array[i].idade + " - " + array[i].cpf;
+
+                var actions = document.createElement("div");
+                actions.className = "item-actions";
+
+                var updateButton = document.createElement("button");
+                updateButton.className = "action-button";
+                updateButton.textContent = "Atualizar";
+
+                var deleteButton = document.createElement("button");
+                deleteButton.className = "action-button";
+                deleteButton.textContent = "Excluir";
+
+          
+                (function(index) {
+                    deleteButton.addEventListener('click', function(event) {
+                        var id_cliente = array[index].id_cliente;
+                        excluirCliente(id_cliente);
+                        var listItem = event.target.parentNode.parentNode;
+                        listItem.remove();
+                    });
+                    
+                    updateButton.addEventListener('click', function(event) {
+                        var id_cliente = array[index].id_cliente;
+                        window.location.href = "updateCliente.php?id_cliente=" + id_cliente;
+                    });
+                })(i);
+
+                actions.appendChild(updateButton);
+                actions.appendChild(deleteButton);
+
+                item.appendChild(actions);
+
+                lista.appendChild(item);
+            }
+        }
+
+        // Função para excluir o cliente no banco de dados
+        function excluirCliente(id_cliente) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "excluircliente.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    console.log(response); // Exibir a resposta do servidor (opcional)
+                }
+            };
+            xhr.send("id_cliente=" + id_cliente);
+        }
+
+        // Obter dados dos clientes do banco de dados
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "DadosClientes.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var clientes = JSON.parse(xhr.responseText);
+                criarItensLista(clientes, "clientes-lista");
+            }
+        };
+        xhr.send();
+
+       
+    </script>
+</body>
+</html>

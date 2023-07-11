@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tela de Listagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .list {
+            width: 500px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+        }
+        
+        h2 {
+            margin-top: 0;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .item-actions {
+            margin-left: auto;
+        }
+        
+        .action-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        
+        .action-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Espaçamento entre as colunas do cabeçalho */
+        .list-header strong:not(:last-child) {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="list">
+            <h2>Carros</h2>
+            <ul id="carros-lista">
+                <!-- Cabeçalho da lista de carros -->
+                <li class="list-header">
+                    <strong>Placa</strong>
+                    <strong>Cor</strong>
+                    <strong>Marca</strong>
+                    <strong>Modelo</strong>
+                    <strong>ID</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <button onclick="window.location.href='menu.html'">Voltar</button>
+    <script>
+        // Função para criar os itens da lista de carros
+        function criarItensLista(array, listaId) {
+            var lista = document.getElementById(listaId);
+
+            for (var i = 0; i < array.length; i++) {
+                var item = document.createElement("li");
+                item.textContent = array[i].placa + " - " + array[i].cor + " - " + array[i].marca + " - " + array[i].modelo + " - " + array[i].id_cliente;
+
+                var actions = document.createElement("div");
+                actions.className = "item-actions";
+
+                var updateButton = document.createElement("button");
+                updateButton.className = "action-button";
+                updateButton.textContent = "Atualizar";
+
+                var deleteButton = document.createElement("button");
+                deleteButton.className = "action-button";
+                deleteButton.textContent = "Excluir";
+
+                (function(index) {
+                    deleteButton.addEventListener('click', function(event) {
+                        var placa = array[index].placa;
+                        excluirCarro(placa);
+                        var listItem = event.target.parentNode.parentNode;
+                        listItem.remove();
+                    });
+                    
+                    updateButton.addEventListener('click', function(event) {
+                        var placa = array[index].placa;
+                        window.location.href = "updateCarro.php?placa=" + placa;
+                    });
+                })(i);
+
+                actions.appendChild(updateButton);
+                actions.appendChild(deleteButton);
+
+                item.appendChild(actions);
+
+                lista.appendChild(item);
+            }
+        }
+
+        // Função para excluir o carro no banco de dados
+        function excluirCarro(placa) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "excluircarro.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    console.log(response); // Exibir a resposta do servidor (opcional)
+                }
+            };
+            xhr.send("placa=" + placa);
+        }
+
+        // Obter dados dos carros do banco de dados
+        var xhrCarro = new XMLHttpRequest();
+        xhrCarro.open("GET", "DadosCarro.php", true);
+        xhrCarro.onreadystatechange = function() {
+            if (xhrCarro.readyState === 4 && xhrCarro.status === 200) {
+                var carros = JSON.parse(xhrCarro.responseText);
+                criarItensLista(carros, "carros-lista");
+            }
+        };
+        xhrCarro.send();
+
+    </script>
+</body>
+</html>

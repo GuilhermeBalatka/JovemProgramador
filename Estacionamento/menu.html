@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tela com Botões de Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .menu-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <button class="menu-button" onclick="menu1Clicado()">Clientes</button>
+        <button class="menu-button" onclick="menu2Clicado()">Estacionamento</button>
+        <button class="menu-button" onclick="menu3Clicado()">Lista do Estacionamento</button>
+        <button class="menu-button" onclick="menu4Clicado()">Lista de Clientes</button> <!-- Botão para acessar a lista de clientes -->
+    </div>
+
+    <script>
+        function menu1Clicado() {
+            window.location.href = "AdicionarClientes.html";
+        }
+
+        function menu2Clicado() {
+            window.location.href = "AdicionarCarros.html";
+        }
+
+        function menu3Clicado() {
+            window.location.href = "lista.html";
+        }
+
+        function menu4Clicado() {
+            window.location.href = "listaClientes.html"; // Substitua "listaClientes.html" pelo nome do arquivo onde a lista de clientes será exibida
+        }
+    </script>
+</body>
+</html>
